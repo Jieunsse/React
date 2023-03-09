@@ -4,23 +4,9 @@ import { useState } from 'react';
 function App() {
   
   let [title, setTitle] = useState( [ '남자 코트 추천', '강남 우동맛집', '파이썬독학' ] ); // '글제목' 배열 선언.
-  let [emoji, setEmoji] = useState(0); // 따봉 변수 선언.
+  let [emoji, setEmoji] = useState([0, 0, 0]); // 따봉 변수 선언.
   let [modal, setModal] = useState(false); // 변경함수는 set으로 시작하는 게 국룰. false > 안 보임. true > 보임. 
 
-  // function 만들어서 변경함수로 false 넣어봄
-  // false 직접 넣어봄
-  // <Modal/> 한번 더 적어봄
-  // 변경함수 직접 넣어봄
-  // 
-
-  function close() {
-
-
-      let copyModal = [...modal]; // useState로 상태 변경하기 위해서 다른 변수로 바꾸기. (화살표 바꾸기)
-      copyModal = setModal(false);  // 변경함수 사용해서 copyModal에 있는 값을 false로 바꾸기. (false로 바꾸기)
-      setModal(copyModal); // 변경 함수를 사용해서 copyModal에 있는 false를 modal에 전달하기. (false를 옮기기)
-   
-  }
 
   function order() {
     let reArrange = [...title].sort();
@@ -44,7 +30,7 @@ function App() {
         setTitle(copy);
       }}>글수정</button>
 
-      <div className="list">
+      {/* <div className="list">
         <h4>{ title[0] } <span onClick={ ()=> setEmoji(emoji + 1) }>👍</span> { emoji } </h4>
         <p>2월 17일 발행</p>
       </div>
@@ -53,15 +39,26 @@ function App() {
         <p>2월 17일 발행</p>
       </div>
       <div className="list">
-        <h4 onClick={()=>{ setModal(true) }}>{ title[2] }</h4>
+        <h4 onClick={()=>{ setModal(!modal) }}>{ title[2] }</h4>
         <p>2월 17일 발행</p>
-      </div>       
+      </div>        */}
         
     
      {
-       modal === true ? <Modal/> : close
+       modal == true ? <Modal/> : null
      }
 
+
+      {
+        title.map(function(a, i){
+          return (
+            <div className="list">
+              <h4>{ title[i] } <span onClick={()=> { setEmoji(emoji+1) }}>  👍 </span> {emoji[i]} </h4> 
+            </div>
+          )
+        })
+      }
+        {/* 여기 수정해서 따봉이 각각 적용되도록 만들자. */}
 
     </div>
   );
@@ -78,6 +75,7 @@ function Modal() {
     </div>
   )
 }
+
 
 
 export default App;
